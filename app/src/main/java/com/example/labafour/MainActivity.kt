@@ -46,6 +46,49 @@ class MainActivity : ComponentActivity() {
 
 
 
+fun calculateSeries(epsilon: Double): Triple<Double, Double, Int> {
+    var sum = 0.0
+    var n = 1
+    var count = 0
+    var lastTerm = 0.0
+
+    while (true) {
+        var factorial = 1.0
+
+        for (i in 1..n) {
+            factorial *= i
+        }
+
+        val term = 1.0 / factorial
+
+        android.util.Log.d(
+            "CycleLab",
+            "CHECK: n=$n, term=$term, epsilon=$epsilon, stop=${kotlin.math.abs(term) < epsilon}"
+        )
+
+        if (kotlin.math.abs(term) < epsilon) {
+            break
+        }
+
+        sum += term
+        lastTerm = term
+        count++
+        n += 2
+    }
+
+    android.util.Log.d(
+        "CycleLab",
+        "FINAL: sum=$sum, lastTerm=$lastTerm, count=$count"
+    )
+
+    return Triple(sum, lastTerm, count)
+}
+
+
+
+
+
+
 @Composable
 fun CycleScreen(modifier: Modifier = Modifier) {
     var epsilon by remember { mutableStateOf("0.000001") }
@@ -81,7 +124,11 @@ fun CycleScreen(modifier: Modifier = Modifier) {
                 val value = epsilon.toDoubleOrNull()
 
                 message = if (value != null && value > 0) {
-                    "Точность принята: $value"
+                    val result = calculateSeries(value)
+                    "Точность: $value\n" +
+                            "Сумма: ${result.first}\n" +
+                            "Последнее слагаемое: ${result.second}\n" +
+                            "Повторений: ${result.third}"
                 } else {
                     "Введите положительное число"
                 }
@@ -91,9 +138,12 @@ fun CycleScreen(modifier: Modifier = Modifier) {
             Text("Вычислить")
         }
 
+
         Text(
             text = message,
-            modifier = Modifier.padding(top = 16.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp)
         )
     }
 }
