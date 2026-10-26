@@ -1,6 +1,14 @@
 
 package com.example.labafour
 
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -35,10 +43,15 @@ class MainActivity : ComponentActivity() {
 }
 
 
+
 @Composable
 fun CycleScreen(modifier: Modifier = Modifier) {
+    var epsilon by remember { mutableStateOf("0.000001") }
+
     Column(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier
+            .fillMaxSize()
+            .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -46,6 +59,20 @@ fun CycleScreen(modifier: Modifier = Modifier) {
             text = "Вычисление суммы ряда",
             style = MaterialTheme.typography.headlineSmall
         )
+
+        OutlinedTextField(
+            value = epsilon,
+            onValueChange = { epsilon = it },
+            label = { Text("Точность ε") },
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Decimal
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp),
+            singleLine = true
+        )
     }
 }
+
 
