@@ -26,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.labafour.ui.theme.LabaFourTheme
+import androidx.compose.ui.text.style.TextAlign
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -101,9 +102,17 @@ fun CycleScreen(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
+
         Text(
             text = "Вычисление суммы ряда",
             style = MaterialTheme.typography.headlineSmall
+        )
+        Text(
+            text = "S = 1/1! + 1/3! + 1/5! + 1/7! + ...",
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 12.dp),
+            style = MaterialTheme.typography.bodyLarge
         )
 
         OutlinedTextField(
