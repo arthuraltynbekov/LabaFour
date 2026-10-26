@@ -1,6 +1,7 @@
 
 package com.example.labafour
 
+import androidx.compose.material3.Button
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.foundation.text.KeyboardOptions
@@ -44,9 +45,11 @@ class MainActivity : ComponentActivity() {
 
 
 
+
 @Composable
 fun CycleScreen(modifier: Modifier = Modifier) {
     var epsilon by remember { mutableStateOf("0.000001") }
+    var message by remember { mutableStateOf("") }
 
     Column(
         modifier = modifier
@@ -72,7 +75,28 @@ fun CycleScreen(modifier: Modifier = Modifier) {
                 .padding(top = 16.dp),
             singleLine = true
         )
+
+        Button(
+            onClick = {
+                val value = epsilon.toDoubleOrNull()
+
+                message = if (value != null && value > 0) {
+                    "Точность принята: $value"
+                } else {
+                    "Введите положительное число"
+                }
+            },
+            modifier = Modifier.padding(top = 16.dp)
+        ) {
+            Text("Вычислить")
+        }
+
+        Text(
+            text = message,
+            modifier = Modifier.padding(top = 16.dp)
+        )
     }
 }
+
 
 
